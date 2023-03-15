@@ -4,6 +4,7 @@ import {
   bind,
   mouseMoveUp,
   bindTouch,
+  unbind,
   createEventEmitter,
 } from './event';
 import Resizer from './resizer';
@@ -715,32 +716,41 @@ function sheetInitEvents() {
     }
   };
 
-  bind(window, 'resize', () => {
+  this.resizeHandle = () => {
     this.reload();
-  });
+  };
 
-  bind(window, 'click', (evt) => {
+  bind(window, 'resize', this.resizeHandle);
+
+
+  this.clickHandle = (evt) => {
     this.focusing = overlayerEl.contains(evt.target);
-  });
+  };
 
-  bind(window, 'paste', (evt) => {
+  bind(window, 'click', this.clickHandle);
+
+  this.pasteHandle = (evt) => {
     if (!this.focusing) return;
     paste.call(this, 'all', evt);
     evt.preventDefault();
-  });
+  };
+  bind(window, 'paste', this.pasteHandle);
 
-  bind(window, 'copy', (evt) => {
+  this.copyHandle = (evt) => {
     if (!this.focusing) return;
     copy.call(this, evt);
     evt.preventDefault();
-  });
+  };
+  bind(window, 'copy', this.copyHandle);
 
-  // for selector
-  bind(window, 'keydown', (evt) => {
+  this.keydownHandle = (evt) => {
     if (!this.focusing) return;
     const keyCode = evt.keyCode || evt.which;
     const {
-      key, ctrlKey, shiftKey, metaKey,
+      key,
+      ctrlKey,
+      shiftKey,
+      metaKey,
     } = evt;
     // console.log('keydown.evt: ', keyCode);
     if (ctrlKey || metaKey) {
@@ -882,7 +892,9 @@ function sheetInitEvents() {
         editorSet.call(this);
       }
     }
-  });
+  }
+// for selector
+  bind(window, 'keydown', this.keydownHandle);
 }
 
 export default class Sheet {
@@ -1009,5 +1021,14 @@ export default class Sheet {
       left: cols.indexWidth,
       top: rows.height,
     };
+  }
+
+
+  destroy() {
+    unbind(window, 'resize', this.resizeHandle);
+    unbind(window, 'click', this.clickHandle);
+    unbind(window, 'paste', this.pasteHandle);
+    unbind(window, 'copy', this.copyHandle);
+    unbind(window, 'keydown', this.keydownHandle);
   }
 }
