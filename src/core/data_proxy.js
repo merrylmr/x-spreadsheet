@@ -334,7 +334,7 @@ export default class DataProxy {
     this.cols = new Cols(this.settings.col);
     this.validations = new Validations();
     this.hyperlinks = {};
-    this.comments = {};
+    this.comments = this.settings.comments || {};
     // save data end
 
     // don't save object
@@ -932,14 +932,17 @@ export default class DataProxy {
   }
 
   scrolly(y, cb) {
-    const { scroll, freeze, rows } = this;
+    const {
+      scroll,
+      freeze,
+      rows
+    } = this;
     const [fri] = freeze;
     const [
       ri, top, height,
     ] = helper.rangeReduceIf(fri, rows.len, 0, 0, y, i => rows.getHeight(i));
     let y1 = top;
     if (y > 0) y1 += height;
-    // console.log('ri:', ri, ' ,y:', y1);
     if (scroll.y !== y1) {
       scroll.ri = y > 0 ? ri : 0;
       scroll.y = y1;
