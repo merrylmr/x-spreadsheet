@@ -10,16 +10,16 @@ const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', '
  * @returns {string}
  */
 export function stringAt(index) {
-    let str = '';
-    let cindex = index;
-    while (cindex >= alphabets.length) {
-        cindex /= alphabets.length;
-        cindex -= 1;
-        str += alphabets[parseInt(cindex, 10) % alphabets.length];
-    }
-    const last = index % alphabets.length;
-    str += alphabets[last];
-    return str;
+  let str = '';
+  let cindex = index;
+  while (cindex >= alphabets.length) {
+    cindex /= alphabets.length;
+    cindex -= 1;
+    str += alphabets[parseInt(cindex, 10) % alphabets.length];
+  }
+  const last = index % alphabets.length;
+  str += alphabets[last];
+  return str;
 }
 
 /** translate letter in A1-tag to number
@@ -29,9 +29,9 @@ export function stringAt(index) {
  * @returns {number}
  */
 export function indexAt(str) {
-    let ret = 0;
-    for (let i = 0; i !== str.length; ++i) ret = 26 * ret + str.charCodeAt(i) - 64;
-    return ret - 1;
+  let ret = 0;
+  for(let i = 0; i !== str.length; ++i) ret = 26 * ret + str.charCodeAt(i) - 64;
+  return ret - 1;
 }
 
 
@@ -43,16 +43,16 @@ export function indexAt(str) {
  * @returns {tagXY}
  */
 export function expr2xy(src) {
-    let x = '';
-    let y = '';
-    for (let i = 0; i < src.length; i += 1) {
-        if (src.charAt(i) >= '0' && src.charAt(i) <= '9') {
-            y += src.charAt(i);
-        } else {
-            x += src.charAt(i);
-        }
+  let x = '';
+  let y = '';
+  for (let i = 0; i < src.length; i += 1) {
+    if (src.charAt(i) >= '0' && src.charAt(i) <= '9') {
+      y += src.charAt(i);
+    } else {
+      x += src.charAt(i);
     }
-    return [indexAt(x), parseInt(y, 10) - 1];
+  }
+  return [indexAt(x), parseInt(y, 10) - 1];
 }
 
 /** translate XY-tag to A1-tag
@@ -64,7 +64,7 @@ export function expr2xy(src) {
  * @returns {tagA1}
  */
 export function xy2expr(x, y) {
-    return `${stringAt(x)}${y + 1}`;
+  return `${stringAt(x)}${y + 1}`;
 }
 
 /** translate A1-tag src by (xn, yn)
@@ -76,16 +76,16 @@ export function xy2expr(x, y) {
  * @returns {tagA1}
  */
 export function expr2expr(src, xn, yn, condition = () => true) {
-    if (xn === 0 && yn === 0) return src;
-    const [x, y] = expr2xy(src);
-    if (!condition(x, y)) return src;
-    return xy2expr(x + xn, y + yn);
+  if (xn === 0 && yn === 0) return src;
+  const [x, y] = expr2xy(src);
+  if (!condition(x, y)) return src;
+  return xy2expr(x + xn, y + yn);
 }
 
 export default {
-    stringAt,
-    indexAt,
-    expr2xy,
-    xy2expr,
-    expr2expr,
+  stringAt,
+  indexAt,
+  expr2xy,
+  xy2expr,
+  expr2expr,
 };

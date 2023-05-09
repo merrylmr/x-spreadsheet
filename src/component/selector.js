@@ -227,9 +227,7 @@ export default class Selector {
     // for performance
     this.lastri = -1;
     this.lastci = -1;
-    // 恢复到初始值，在单页面应用中，这个值会一直累加，导致 zIndex 越来越大
-    // 最终大于“x-spreadsheet-editor”的20，而出现样式层级问题
-    startZIndex = 10;
+
     startZIndex += 1;
   }
 
