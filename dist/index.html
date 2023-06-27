@@ -179,7 +179,9 @@
               console.log('text:', text, ', ri: ', ri, ', ci:', ci);
           }).on('pasted-clipboard', (data) => {
               console.log('>>>> data is ', data);
-          });
+          }).on('changeSheet', (index) => {
+              console.log('changeSheet:', index);
+          })
 
           setTimeout(() => {
               // xs.loadData([{ rows }]);

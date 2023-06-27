@@ -104,30 +104,31 @@ export default class Bottombar {
     const item = h('li', active ? 'active' : '').child(name);
     item.on('click', () => {
       this.clickSwap2(item);
-    }).on('contextmenu', (evt) => {
-      if (options.mode === 'read') return;
-      const { offsetLeft, offsetHeight } = evt.target;
-      this.contextMenu.setOffset({ left: offsetLeft, bottom: offsetHeight + 1 });
-      this.deleteEl = item;
-    }).on('dblclick', () => {
-      if (options.mode === 'read') return;
-      const v = item.html();
-      const input = new FormInput('auto', '');
-      input.val(v);
-      input.input.on('blur', ({ target }) => {
-        const { value } = target;
-        const nindex = this.dataNames.findIndex(it => it === v);
-        this.renameItem(nindex, value);
-        /*
-        this.dataNames.splice(nindex, 1, value);
-        this.moreEl.reset(this.dataNames);
-        item.html('').child(value);
-        this.updateFunc(nindex, value);
-        */
-      });
-      item.html('').child(input.el);
-      input.focus();
     });
+    //     .on('contextmenu', (evt) => {
+    //   if (options.mode === 'read') return;
+    //   const { offsetLeft, offsetHeight } = evt.target;
+    //   this.contextMenu.setOffset({ left: offsetLeft, bottom: offsetHeight + 1 });
+    //   this.deleteEl = item;
+    // }).on('dblclick', () => {
+    //   if (options.mode === 'read') return;
+    //   const v = item.html();
+    //   const input = new FormInput('auto', '');
+    //   input.val(v);
+    //   input.input.on('blur', ({ target }) => {
+    //     const { value } = target;
+    //     const nindex = this.dataNames.findIndex(it => it === v);
+    //     this.renameItem(nindex, value);
+    //     /*
+    //     this.dataNames.splice(nindex, 1, value);
+    //     this.moreEl.reset(this.dataNames);
+    //     item.html('').child(value);
+    //     this.updateFunc(nindex, value);
+    //     */
+    //   });
+    //   item.html('').child(input.el);
+    //   input.focus();
+    // });
     if (active) {
       this.clickSwap(item);
     }
