@@ -168,7 +168,12 @@
                       '1-1': 'xxx',
                       '2-1': 'hello',
                   },
-              }, {name: 'sheet-test', rows: rows10}]).change((cdata) => {
+              }, {name: 'sheet-test', rows: rows10,
+                  comments: {
+                      '0-0': '0-0',
+                      '20-5': '不能对绝对定位的元素使用以上三种分页属性。请尽可能少地使用分页属性，并且避免在表格、浮动元素、带有边框的块元素中使用分页属性不能对绝对定位的元素使用以上三种分页属性。请尽可能少地使用分页属性，并且避免在表格、浮动元素、带有边框的块元素中使用分页属性',
+                      '20-14': 'hello',
+                  },}]).change((cdata) => {
                   // console.log(cdata);
                   console.log('>>>', xs.getData());
               });
@@ -185,6 +190,7 @@
               console.log('>>>> data is ', data);
           }).on('changeSheet', (index) => {
               console.log('changeSheet:', index);
+              console.log('getData:', xs.getData());
           })
 
           setTimeout(() => {

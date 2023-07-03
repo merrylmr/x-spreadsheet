@@ -1051,6 +1051,8 @@ form fieldset select {
   z-index: 30;
   border-radius: 5px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  height: 100px;
+  overflow-y: auto;
 }
 .x-spreadsheet-comments-title {
   padding: 10px;
@@ -1062,6 +1064,7 @@ form fieldset select {
   font-size: 14px;
   line-height: 1.5;
   padding: 10px;
+  word-break: break-all;
 }
 .split-column .split-title {
   font-size: 16px;

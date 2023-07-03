@@ -1268,6 +1268,7 @@ export default class DataProxy {
             cols: cols.getData(),
             validations: validations.getData(),
             autofilter: autoFilter.getData(),
+            comments: this.comments,
         };
     }
 

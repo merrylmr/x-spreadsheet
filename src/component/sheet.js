@@ -144,11 +144,14 @@ function overlayerMousemove(evt) {
 
                 let left = cRect.left + cRect.width;
                 if (cRect.left + cRect.width + 300 > viewWidth) {
-                    left = cRect.left - 300 - cRect.width / 2 + 10;
+                    left = cRect.left - 300;
                 }
 
 
-                const {top} = cRect;
+                let {top} = cRect;
+                if (top + 100 > viewHeight) {
+                    top = cRect.top - 100 + cRect.height;
+                }
                 this.comment.showComment({
                     content: tip,
                     left,
