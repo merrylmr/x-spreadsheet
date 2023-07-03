@@ -68,7 +68,8 @@ export function renderCell(draw, data, rindex, cindex, yoffset = 0) {
 
     const style = data.getCellStyleOrDefault(nrindex, cindex);
     const dbox = getDrawBox(data, rindex, cindex, yoffset);
-    dbox.bgcolor = style.bgcolor;
+    const hasTip = data.comments[`${rindex}-${cindex}`] ? '#e6a23c' : '';
+    dbox.bgcolor = hasTip || style.bgcolor;
     if (style.border !== undefined) {
         dbox.setBorders(style.border);
         // bboxes.push({ ri: rindex, ci: cindex, box: dbox });

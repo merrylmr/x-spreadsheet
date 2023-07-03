@@ -298,16 +298,20 @@ function overlayerTouch(direction, distance) {
 function verticalScrollbarSet() {
     const {data, verticalScrollbar} = this;
     const {height} = this.getTableOffset();
+    const scrollY = data.scroll.y;
     const erth = data.exceptRowTotalHeight(0, -1);
     // console.log('erth:', erth);
     verticalScrollbar.set(height, data.rows.totalHeight() - erth);
+    verticalScrollbar.move({top: scrollY});
 }
 
 function horizontalScrollbarSet() {
     const {data, horizontalScrollbar} = this;
+    const scrollX = data.scroll.x;
     const {width} = this.getTableOffset();
     if (data) {
         horizontalScrollbar.set(width, data.cols.totalWidth());
+        horizontalScrollbar.move({left: scrollX});
     }
 }
 

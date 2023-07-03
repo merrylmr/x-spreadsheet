@@ -1,17 +1,18 @@
 import {h} from './element';
+import {cssPrefix} from '../config';
 
 export default class Comment {
     constructor() {
-        this.el = h('div', 'comments')
+        this.el = h('div', `${cssPrefix}-comments`)
             .children(
-                this.titleEl = h('div', 'title'),
-                this.contentEl = h('div', 'content')
+                this.titleEl = h('div', `${cssPrefix}-comments-title`),
+                this.contentEl = h('div', `${cssPrefix}-comments-content`),
             );
         this.el.hide();
     }
 
     init(title, content) {
-        this.titleEl.html(title || '修改建议');
+        this.titleEl.html(title || '错误数据提示');
         this.contentEl.html(content);
         return this;
     }
@@ -26,17 +27,17 @@ export default class Comment {
         title,
         content,
         left,
-        top
+        top,
     }) {
         this.init(title, content);
         this.setPos({
             left,
-            top
+            top,
         });
         this.el.show();
     }
 
     hideComment() {
-        this.el.hide()
+        this.el.hide();
     }
 }
