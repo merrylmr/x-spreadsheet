@@ -164,6 +164,10 @@
                       2: {width: 200},
                   },
                   rows,
+                  comments: {
+                      '1-1': 'xxx',
+                      '2-1': 'hello',
+                  },
               }, {name: 'sheet-test', rows: rows10}]).change((cdata) => {
                   // console.log(cdata);
                   console.log('>>>', xs.getData());
