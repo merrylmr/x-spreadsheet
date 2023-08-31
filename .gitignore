@@ -2,3 +2,12 @@ node_modules
 yarn.lock
 
 .nyc_output/*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
