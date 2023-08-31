@@ -866,47 +866,33 @@ export default class DataProxy {
         });
     }
 
-    // type: row | column
-    insert(type, n = 1) {
-        this.changeData(() => {
-            const {sri, sci} = this.selector.range;
-            const {rows, merges, cols} = this;
-            let si = sri;
-            if (type === 'row') {
-                rows.insert(sri, n);
-            } else if (type === 'column') {
-                rows.insertColumn(sci, n);
-                si = sci;
-                cols.len += n;
-            }
-            merges.shift(type, si, n, (ri, ci, rn, cn) => {
-                const cell = rows.getCell(ri, ci);
-                cell.merge[0] += rn;
-                cell.merge[1] += cn;
-            });
+  // type: row | column
+  insert(type, n = 1) {
+    this.changeData(() => {
+      const { sri, sci } = this.selector.range;
+      const { rows, merges, cols } = this;
+      let si = sri;
+      if (type === 'row') {
+        rows.insert(sri, n);
+      } else if (type === 'column') {
+        rows.insertColumn(sci, n);
+        si = sci;
+        cols.len += n;
+        Object.keys(cols._).reverse().forEach((colIndex) => {
+          const col = parseInt(colIndex, 10);
+          if (col >= sci) {
+            cols._[col + n] = cols._[col];
+            delete cols._[col];
+          }
         });
-    }
-
-    // 插入列：右侧 插入行：底部
-    insertRight(type, n = 1) {
-        this.changeData(() => {
-            const {sri, sci} = this.selector.range;
-            const {rows, merges, cols} = this;
-            let si = sri;
-            if (type === 'row') {
-                rows.insert(sri, n, 'bottom');
-            } else if (type === 'column') {
-                rows.insertColumn(sci, n, 'right');
-                si = sci;
-                cols.len += n;
-            }
-            merges.shift1(type, si, n, (ri, ci, rn, cn) => {
-                const cell = rows.getCell(ri, ci);
-                cell.merge[0] += rn;
-                cell.merge[1] += cn;
-            });
-        });
-    }
+      }
+      merges.shift(type, si, n, (ri, ci, rn, cn) => {
+        const cell = rows.getCell(ri, ci);
+        cell.merge[0] += rn;
+        cell.merge[1] += cn;
+      });
+    });
+  }
 
     // type: row | column
     delete(type) {
@@ -928,7 +914,13 @@ export default class DataProxy {
                 si = range.sci;
                 size = csize;
                 cols.len -= (eci - sci + 1);
-            }
+            Object.keys(cols._).forEach((colIndex) => {
+          const col = parseInt(colIndex, 10);
+          if (col >= sci) {
+            if (col > eci) cols._[col - (eci - sci + 1)] = cols._[col];
+            delete cols._[col];
+          }
+        });}
             // console.log('type:', type, ', si:', si, ', size:', size);
             merges.shift(type, si, -size, (ri, ci, rn, cn) => {
                 // console.log('ri:', ri, ', ci:', ci, ', rn:', rn, ', cn:', cn);
