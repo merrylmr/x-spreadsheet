@@ -133,7 +133,8 @@ function selectorMove(multiple, direction) {
 function overlayerMousemove(evt) {
     // console.log('x:', evt.offsetX, ', y:', evt.offsetY);
     // hover comment show
-    if (Object.values(this.data.comments).length && evt.buttons === 0) {
+    if (evt.buttons !== 0) return;
+    if (Object.values(this.data.comments).length) {
         const cRect = this.data.getCellRectByXY(evt.offsetX, evt.offsetY);
         if (cRect.ri >= 0 && cRect.ci >= 0) {
             const tip = this.data.comments[`${[cRect.ri]}-${[cRect.ci]}`];
@@ -161,56 +162,55 @@ function overlayerMousemove(evt) {
                 this.comment.hideComment();
             }
         }
-    } else if (evt.buttons !== 0) {
-        // 拖拽行、列宽度变化
-        if (evt.target.className === `${cssPrefix}-resizer-hover`) return;
-        const {
-            offsetX,
-            offsetY,
-        } = evt;
-        const {
-            rowResizer,
-            colResizer,
-            tableEl,
-            data,
-        } = this;
-        const {
-            rows,
-            cols,
-        } = data;
-        if (offsetX > cols.indexWidth && offsetY > rows.height) {
-            rowResizer.hide();
-            colResizer.hide();
-            return;
-        }
-        const tRect = tableEl.box();
-        const cRect = data.getCellRectByXY(evt.offsetX, evt.offsetY);
-        if (cRect.ri >= 0 && cRect.ci === -1) {
-            cRect.width = cols.indexWidth;
-            rowResizer.show(cRect, {
-                width: tRect.width,
-            });
-            if (rows.isHide(cRect.ri - 1)) {
-                rowResizer.showUnhide(cRect.ri);
-            } else {
-                rowResizer.hideUnhide();
-            }
+    }
+    // 拖拽行、列宽度变化
+    if (evt.target.className === `${cssPrefix}-resizer-hover`) return;
+    const {
+        offsetX,
+        offsetY,
+    } = evt;
+    const {
+        rowResizer,
+        colResizer,
+        tableEl,
+        data,
+    } = this;
+    const {
+        rows,
+        cols,
+    } = data;
+    if (offsetX > cols.indexWidth && offsetY > rows.height) {
+        rowResizer.hide();
+        colResizer.hide();
+        return;
+    }
+    const tRect = tableEl.box();
+    const cRect = data.getCellRectByXY(evt.offsetX, evt.offsetY);
+    if (cRect.ri >= 0 && cRect.ci === -1) {
+        cRect.width = cols.indexWidth;
+        rowResizer.show(cRect, {
+            width: tRect.width,
+        });
+        if (rows.isHide(cRect.ri - 1)) {
+            rowResizer.showUnhide(cRect.ri);
         } else {
-            rowResizer.hide();
+            rowResizer.hideUnhide();
         }
-        if (cRect.ri === -1 && cRect.ci >= 0) {
-            cRect.height = rows.height;
-            colResizer.show(cRect, {
-                height: tRect.height,
-            });
-            if (cols.isHide(cRect.ci - 1)) {
-                colResizer.showUnhide(cRect.ci);
-            } else {
-                colResizer.hideUnhide();
-            }
+    } else {
+        rowResizer.hide();
+    }
+    if (cRect.ri === -1 && cRect.ci >= 0) {
+        cRect.height = rows.height;
+        colResizer.show(cRect, {
+            height: tRect.height,
+        });
+        if (cols.isHide(cRect.ci - 1)) {
+            colResizer.showUnhide(cRect.ci);
         } else {
-            colResizer.hide();
+            colResizer.hideUnhide();
         }
+    } else {
+        colResizer.hide();
     }
 }
 
