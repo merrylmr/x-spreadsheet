@@ -450,6 +450,10 @@ body {
     font-size: 1em;
   }
 }
+.@{css-prefix}-item-input{
+    width: 50px;
+    float:right;
+}
 
 .x-spreadsheet-item,
 .x-spreadsheet-header,
@@ -1243,20 +1247,60 @@ form fieldset {
 }
 
 
-.comments {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 300px;
-  min-height: 100px;
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 20px;
-  text-align: left;
-  z-index: 30;
+.@{css-prefix}-comments {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    min-height: 100px;
+    background: #fff;
+    border: 1px solid #ccc;
 
-  .title {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
+    text-align: left;
+    z-index: 30;
+    border-radius: 5px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+    height: 100px;
+    overflow-y: auto;
+    &-title {
+        padding: 10px;
+        font-size: 14px;
+        border-bottom: 1px solid #eee;
+        letter-spacing: 1px;
+    }
+
+    &-content {
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 10px;
+        word-break: break-all ;
+    }
+}
+
+.split-column {
+    .split-title {
+        font-size: 16px;
+        padding: 10px 0;
+        letter-spacing: 1px;
+    }
+
+    .options {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .split-preview {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 100px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+
+    .preview-item {
+        border-bottom: 1px solid #000;
+        padding: 5px;
+    }
 }

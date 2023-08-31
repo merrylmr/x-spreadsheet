@@ -24,6 +24,7 @@ class Spreadsheet {
     }, (index) => {
       const d = this.datas[index];
       this.sheet.resetData(d);
+      this.sheet.trigger('changeSheet', index);
     }, () => {
       this.deleteSheet();
     }, (index, value) => {
